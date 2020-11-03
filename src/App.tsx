@@ -17,8 +17,7 @@ const defaultTemplate =
   </tbody>
 </table>
 
-
-****
+何か一言：
 `;
 
 
