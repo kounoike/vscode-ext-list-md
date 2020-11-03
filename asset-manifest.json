@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/vscode-ext-list-md/static/css/main.e526544c.chunk.css",
-    "main.js": "/vscode-ext-list-md/static/js/main.8bcfa10d.chunk.js",
-    "main.js.map": "/vscode-ext-list-md/static/js/main.8bcfa10d.chunk.js.map",
+    "main.js": "/vscode-ext-list-md/static/js/main.3829ed96.chunk.js",
+    "main.js.map": "/vscode-ext-list-md/static/js/main.3829ed96.chunk.js.map",
     "runtime-main.js": "/vscode-ext-list-md/static/js/runtime-main.71cdadd7.js",
     "runtime-main.js.map": "/vscode-ext-list-md/static/js/runtime-main.71cdadd7.js.map",
     "static/js/2.c7b7c39f.chunk.js": "/vscode-ext-list-md/static/js/2.c7b7c39f.chunk.js",
@@ -11,13 +11,12 @@
     "static/js/3.b3cccca5.chunk.js.map": "/vscode-ext-list-md/static/js/3.b3cccca5.chunk.js.map",
     "index.html": "/vscode-ext-list-md/index.html",
     "static/css/main.e526544c.chunk.css.map": "/vscode-ext-list-md/static/css/main.e526544c.chunk.css.map",
-    "static/js/2.c7b7c39f.chunk.js.LICENSE.txt": "/vscode-ext-list-md/static/js/2.c7b7c39f.chunk.js.LICENSE.txt",
-    "static/media/logo.103b5fa1.svg": "/vscode-ext-list-md/static/media/logo.103b5fa1.svg"
+    "static/js/2.c7b7c39f.chunk.js.LICENSE.txt": "/vscode-ext-list-md/static/js/2.c7b7c39f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.71cdadd7.js",
     "static/js/2.c7b7c39f.chunk.js",
     "static/css/main.e526544c.chunk.css",
-    "static/js/main.8bcfa10d.chunk.js"
+    "static/js/main.3829ed96.chunk.js"
   ]
 }
