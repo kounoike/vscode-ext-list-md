@@ -2,15 +2,46 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Mustache from 'mustache';
 
+const defaultTemplate = 
+`### [{{extension.displayName}}](https://marketplace.visualstudio.com/items?itemName={{extensionName}}) {{version.version}}
+
+<table>
+  <tbody>
+    <tr>
+      <td rowspan="2" style="width:74px;height:74px;padding:2px"> <img style="width:72px;height:72px" src="{{#assets.Microsoft_VisualStudio_Services_Icons_Small}}{{& assets.Microsoft_VisualStudio_Services_Icons_Small}}{{/assets.Microsoft_VisualStudio_Services_Icons_Small}}{{^assets.Microsoft_VisualStudio_Services_Icons_Small}}https://cdn.vsassets.io/v/M176_20201014.2/_content/Header/default_icon.png{{/assets.Microsoft_VisualStudio_Services_Icons_Small}}"></td>
+      <td>{{extensionName}} By: {{extension.publisher.displayName}} Install: {{#toLocaleString}}{{extension.statistics.0.value}}{{/toLocaleString}} Rate: {{#toFixed}}{{extension.statistics.7.value}}{{/toFixed}}</td>
+    </tr>
+    <tr>
+      <td>{{extension.shortDescription}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+****
+`;
+
+
 function getExtensionMarkdown(extensionName: string, extension: any, version: any, assets: any, template: string) {
   console.log({ extensionName, extension, version, assets }, assets['Microsoft_VisualStudio_Services_Icons_Small'])
-  return Mustache.render(template, { extension, version, assets, extensionName });
+  return Mustache.render(template, {
+     extension, version, assets, extensionName,
+     toFixed: function() {
+      return function(num: number, render: any) {
+          return parseFloat(render(num)).toFixed(1);
+      }
+    },
+    toLocaleString: function() {
+      return function(num: number, render: any) {
+          return parseFloat(render(num)).toLocaleString();
+      }
+    }
+});
 }
 
 function App() {
   const [extListString, setExtListString] = useState("");
   const [resultMarkdown, setResultMarkdown] = useState("");
-  const defaultTemplate = '### ![]({{#assets.Microsoft_VisualStudio_Services_Icons_Small}}{{& assets.Microsoft_VisualStudio_Services_Icons_Small}}{{/assets.Microsoft_VisualStudio_Services_Icons_Small}}{{^assets.Microsoft_VisualStudio_Services_Icons_Small}}https://cdn.vsassets.io/v/M176_20201014.2/_content/Header/default_icon.png{{/assets.Microsoft_VisualStudio_Services_Icons_Small}}) [{{extension.displayName}}](https://marketplace.visualstudio.com/items?itemName={{extensionName}}) {{version.version}}\n\n> {{extension.shortDescription}}\n\n';
   
   const [template, setTemplate] = useState(defaultTemplate);
 
@@ -24,6 +55,7 @@ function App() {
           const extName = ext.slice(0, atIndex);
           const extVersion = atIndex > -1 ? ext.slice(atIndex + 1, -1) : "latest";
           console.log(`${ext} not found`);
+          // marcketplace API: https://www.slideshare.net/cssho/extensionapi
           const queryEndPoint = "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery";
           const method = "POST";
           const headers = {
@@ -43,7 +75,7 @@ function App() {
                 }
               ]
             }],
-            flags: 0x80 | 0x01 | 0x02
+            flags: 0x01 | 0x02 | 0x04 | 0x08 | 0x10 | 0x20 | 0x40 | 0x80 | 0x100
           });
           return new Promise((resolve, reject) => (async () =>{
             await fetch(queryEndPoint, { method, body, headers })
@@ -95,20 +127,27 @@ function App() {
   return (
     <div className="App">
       <header className="Apsp-header">
-        <div>
-          <span>Command: </span><span className="code">code --list-extensions --show-versions</span>
-        </div>
-        <label>paste ext list</label>
-        <textarea rows={10} cols={40} value={extListString} onChange={handleChangeExtList}></textarea>
+        <table>
+          <tbody>
+            <tr>
+              <td><span>Command: </span></td>
+              <td><span className="code">code --list-extensions --show-versions</span></td>
+            </tr>
+            <tr>
+              <td><label>paste ext list</label></td>
+              <td><textarea rows={10} cols={120} value={extListString} onChange={handleChangeExtList}></textarea></td>
+            </tr>
+            <tr>
+              <td><label>Template</label></td>
+              <td><textarea rows={10} cols={120} value={template} onChange={handleChangeTemplate}></textarea></td>
+            </tr>
+            <tr>
+              <td><label>Result</label></td>
+              <td><textarea rows={30} cols={120} value={resultMarkdown} readOnly={true}></textarea></td>
+            </tr>
+          </tbody>
+        </table>
       </header>
-      <div>
-        <label>Template</label>
-        <textarea rows={30} cols={120} value={template} onChange={handleChangeTemplate}></textarea>
-      </div>
-      <div>
-        <label>Result</label>
-        <textarea rows={30} cols={120} value={resultMarkdown} readOnly={true}></textarea>
-      </div>
     </div>
   );
 }
