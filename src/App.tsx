@@ -4,7 +4,7 @@ import './App.css';
 import Mustache from 'mustache';
 
 function getExtensionMarkdown(extensionName: string, extension: any, version: any, assets: any, template: string) {
-  console.log({ extension, version, assets }, assets['Microsoft_VisualStudio_Services_Icons_Small'])
+  console.log({ extensionName, extension, version, assets }, assets['Microsoft_VisualStudio_Services_Icons_Small'])
   return Mustache.render(template, { extension, version, assets, extensionName });
 }
 
@@ -96,15 +96,19 @@ function App() {
   return (
     <div className="App">
       <header className="Apsp-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div>paste <span className="code">code --list-extensions --show-versions</span></div>
+        <div>
+          <span>Command: </span><span className="code">code --list-extensions --show-versions</span>
+        </div>
+        <label>paste ext list</label>
         <textarea rows={10} cols={40} value={extListString} onChange={handleChangeExtList}></textarea>
       </header>
       <div>
-        <textarea rows={30} cols={120} value={resultMarkdown} readOnly={true}></textarea>
+        <label>Template</label>
+        <textarea rows={30} cols={120} value={template} onChange={handleChangeTemplate}></textarea>
       </div>
       <div>
-        <textarea rows={30} cols={120} value={template} onChange={handleChangeTemplate}></textarea>
+        <label>Result</label>
+        <textarea rows={30} cols={120} value={resultMarkdown} readOnly={true}></textarea>
       </div>
     </div>
   );
