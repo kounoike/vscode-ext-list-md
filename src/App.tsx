@@ -104,7 +104,7 @@ function App() {
           })());
         }
       }));
-      const markdown = "## @yourname\n\n<details><summary>見る</summary>" + result.sort((a:any, b:any) => {
+      const markdown = "## @yourname\n\n<details><summary>見る</summary>\n\n" + result.sort((a:any, b:any) => {
         if (a[0] < b[0]) return -1;
         if (a[0] > b[0]) return 1;
         return 0;
