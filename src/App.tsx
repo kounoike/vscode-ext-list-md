@@ -104,11 +104,11 @@ function App() {
           })());
         }
       }));
-      const markdown = result.sort((a:any, b:any) => {
+      const markdown = "## @yourname\n\n<details><summary>見る</summary>" + result.sort((a:any, b:any) => {
         if (a[0] < b[0]) return -1;
         if (a[0] > b[0]) return 1;
         return 0;
-      }).map((a:any)=> a ? a[1] : "").join("\n");
+      }).map((a:any)=> a ? a[1] : "").join("\n") + "</details>";
       setResultMarkdown(markdown)
     })();
   }, [extListString, template]);
